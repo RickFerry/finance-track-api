@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/categorias")
@@ -30,7 +32,7 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> salvar(@RequestBody Categoria categoria, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<Categoria> salvar(@Valid @RequestBody Categoria categoria, UriComponentsBuilder uriBuilder) {
         Categoria categoriaSalva = categoriaService.salvar(categoria);
         return ResponseEntity.created(
                 uriBuilder.path("/{codigo}").buildAndExpand(categoriaSalva.getCodigo()).toUri()
