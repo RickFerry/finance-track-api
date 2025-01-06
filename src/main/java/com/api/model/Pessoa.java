@@ -14,8 +14,8 @@ import javax.validation.constraints.Size;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "categoria")
-public class Categoria {
+@Table(name = "pessoa")
+public class Pessoa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,4 +24,10 @@ public class Categoria {
     @NotNull
     @Size(min = 3, max = 50)
     private String nome;
+
+    @NotNull
+    private Boolean ativo;
+
+    @Embedded
+    private Endereco endereco;
 }
