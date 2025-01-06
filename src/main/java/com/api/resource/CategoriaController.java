@@ -36,4 +36,23 @@ public class CategoriaController {
                 uriBuilder.path("/{codigo}").buildAndExpand(categoriaSalva.getCodigo()).toUri()
         ).body(categoriaSalva);
     }
+
+    @PutMapping("/{codigo}")
+    public ResponseEntity<Categoria> atualizar(@PathVariable Long codigo, @RequestBody Categoria categoria) {
+        try {
+            return ResponseEntity.ok(categoriaService.atualizar(codigo, categoria));
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{codigo}")
+    public ResponseEntity<Void> deletar(@PathVariable Long codigo) {
+        try {
+            categoriaService.deletar(codigo);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
