@@ -19,6 +19,7 @@ public class PessoaService {
         return pessoaRepository.findAll(page);
     }
 
+    @Transactional(readOnly = true)
     public Pessoa buscarPorCodigo(Long codigo) {
         return getPessoa(codigo);
     }
@@ -46,8 +47,7 @@ public class PessoaService {
         pessoaRepository.save(pessoa);
     }
 
-    @Transactional(readOnly = true)
-    private Pessoa getPessoa(Long codigo) {
+    public Pessoa getPessoa(Long codigo) {
         Pessoa pessoa = pessoaRepository.findOne(codigo);
         if (pessoa == null) {
             throw new RuntimeException("Pessoa não encontrada");

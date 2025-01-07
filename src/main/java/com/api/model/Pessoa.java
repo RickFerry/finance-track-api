@@ -1,5 +1,6 @@
 package com.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,4 +31,10 @@ public class Pessoa {
 
     @Embedded
     private Endereco endereco;
+
+    @JsonIgnore
+    @Transient
+    public boolean isInativo() {
+        return !this.ativo;
+    }
 }
