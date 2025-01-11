@@ -44,4 +44,10 @@ public class LancamentoController {
         return ResponseEntity.created(
                 uriBuilder.path("/{codigo}").buildAndExpand(lancamentoSalvo.getCodigo()).toUri()).body(lancamentoSalvo);
     }
+
+    @DeleteMapping("/{codigo}")
+    public ResponseEntity<Void> deletar(@PathVariable Long codigo) {
+        lancamentoService.deletar(codigo);
+        return ResponseEntity.noContent().build();
+    }
 }

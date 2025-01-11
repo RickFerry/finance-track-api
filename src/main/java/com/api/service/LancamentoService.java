@@ -47,7 +47,13 @@ public class LancamentoService {
         return lancamentoRepository.save(lancamento);
     }
 
+    @Transactional(readOnly = true)
     public List<Lancamento> pesquisar(LancamentoFilter filter) {
         return lancamentoRepository.filtrar(filter);
+    }
+
+    @Transactional
+    public void deletar(Long codigo) {
+        lancamentoRepository.delete(codigo);
     }
 }
