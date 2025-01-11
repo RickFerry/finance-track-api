@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -25,8 +24,8 @@ public class LancamentoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Lancamento>> pesquisar(LancamentoFilter filter) {
-        return ResponseEntity.ok(lancamentoService.pesquisar(filter));
+    public ResponseEntity<Page<Lancamento>> pesquisar(LancamentoFilter filter, Pageable page) {
+        return ResponseEntity.ok(lancamentoService.pesquisar(filter, page));
     }
 
     @GetMapping("/{codigo}")

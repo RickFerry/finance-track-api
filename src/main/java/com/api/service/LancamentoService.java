@@ -3,16 +3,14 @@ package com.api.service;
 import com.api.exception.PessoaInexistenteOuInativaException;
 import com.api.model.Lancamento;
 import com.api.model.Pessoa;
+import com.api.repository.PessoaRepository;
 import com.api.repository.filter.LancamentoFilter;
 import com.api.repository.lancamento.LancamentoRepository;
-import com.api.repository.PessoaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -30,14 +28,6 @@ public class LancamentoService {
         return getLancamento(codigo);
     }
 
-    private Lancamento getLancamento(Long codigo) {
-        Lancamento lancamento = lancamentoRepository.findOne(codigo);
-        if (lancamento == null) {
-            throw new RuntimeException("Lançamento não encontrado");
-        }
-        return lancamento;
-    }
-
     @Transactional
     public Lancamento salvar(Lancamento lancamento) {
         Pessoa pessoa = pessoaRepository.findOne(lancamento.getPessoa().getCodigo());
@@ -48,12 +38,20 @@ public class LancamentoService {
     }
 
     @Transactional(readOnly = true)
-    public List<Lancamento> pesquisar(LancamentoFilter filter) {
-        return lancamentoRepository.filtrar(filter);
+    public Page<Lancamento> pesquisar(LancamentoFilter filter, Pageable page) {
+        return lancamentoRepository.filtrar(filter, page);
     }
 
     @Transactional
     public void deletar(Long codigo) {
         lancamentoRepository.delete(codigo);
+    }
+
+    private Lancamento getLancamento(Long codigo) {
+        Lancamento lancamento = lancamentoRepository.findOne(codigo);
+        if (lancamento == null) {
+            throw new RuntimeException("Lançamento não encontrado");
+        }
+        return lancamento;
     }
 }

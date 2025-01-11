@@ -2,9 +2,9 @@ package com.api.repository.lancamento;
 
 import com.api.model.Lancamento;
 import com.api.repository.filter.LancamentoFilter;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface LancamentoRepositoryQuery {
-    List<Lancamento> filtrar(LancamentoFilter filter);
+    Page<Lancamento> filtrar(LancamentoFilter filter, Pageable page);
 }
