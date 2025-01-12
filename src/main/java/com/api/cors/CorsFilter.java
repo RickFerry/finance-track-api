@@ -1,5 +1,7 @@
 package com.api.cors;
 
+import com.api.config.property.ApiProperty;
+import lombok.AllArgsConstructor;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -10,19 +12,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@AllArgsConstructor
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter {
-    private String origemPermitida = "http://localhost:4200";
+    private final ApiProperty apiProperty;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpServletRequest req = (HttpServletRequest) request;
 
-        resp.setHeader("Access-Control-Allow-Origin", origemPermitida);
+        resp.setHeader("Access-Control-Allow-Origin", apiProperty.getOriginPermitida());
         resp.setHeader("Access-Control-Allow-Credentials", "true");
 
-        if ("OPTIONS".equals(req.getMethod()) && origemPermitida.equals(req.getHeader("Origin"))) {
+        if ("OPTIONS".equals(req.getMethod()) && apiProperty.getOriginPermitida().equals(req.getHeader("Origin"))) {
             resp.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
             resp.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
             resp.setHeader("Access-Control-Max-Age", "3600");
