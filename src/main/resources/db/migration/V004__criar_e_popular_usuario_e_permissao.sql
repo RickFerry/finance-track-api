@@ -32,8 +32,8 @@ ALTER TABLE usuario_permissao
 ALTER TABLE usuario_permissao
     ADD CONSTRAINT fk_usuper_on_usuario FOREIGN KEY (codigo_usuario) REFERENCES usuario (codigo);
 
-INSERT INTO usuario (codigo, nome, email, senha) VALUES (1, 'administrador', 'admin@email.com', '$2y$10$XqBdZSMrn37jFZ0xC9x68.vxnLm.Tc7KFRvg99l2cH34gCStr3YiS');
-INSERT INTO usuario (codigo, nome, email, senha) VALUES (2, 'usuario', 'user@email.com', '$2y$10$XqBdZSMrn37jFZ0xC9x68.vxnLm.Tc7KFRvg99l2cH34gCStr3YiS');
+INSERT INTO usuario (codigo, nome, email, senha) VALUES (1, 'administrador', 'admin@email.com', '$2a$10$E0LYcIjyF2ZyrhgximySoO09qva/9KwrGQFuzbtM.r0cu4AUcJuL6');
+INSERT INTO usuario (codigo, nome, email, senha) VALUES (2, 'usuario', 'user@email.com', '$2a$10$E0LYcIjyF2ZyrhgximySoO09qva/9KwrGQFuzbtM.r0cu4AUcJuL6');
 
 INSERT INTO permissao (codigo, descricao) VALUES (1, 'ROLE_CADASTRAR_LANCAMENTO');
 INSERT INTO permissao (codigo, descricao) VALUES (2, 'ROLE_PESQUISAR_LANCAMENTO');

@@ -14,9 +14,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/usuarios")
 public class UsuarioController {
     private final UsuarioService usuarioService;
-
-    @GetMapping("/email")
-    public ResponseEntity<UserDetails> getEmail(@RequestParam String email) {
-        return ResponseEntity.ok(usuarioService.loadUserByUsername(email));
-    }
 }
