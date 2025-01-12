@@ -1,6 +1,7 @@
 package com.api.repository.lancamento;
 
 import com.api.model.Lancamento;
+import com.api.model.dto.ResumoLancamento;
 import com.api.repository.filter.LancamentoFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -35,6 +36,31 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
         return new PageImpl<>(query.getResultList(), page, total(filter));
     }
 
+    @Override
+    public Page<ResumoLancamento> resumir(LancamentoFilter filter, Pageable page) {
+        CriteriaBuilder builder = manager.getCriteriaBuilder();
+        CriteriaQuery< ResumoLancamento > criteria = builder.createQuery(ResumoLancamento.class);
+        Root<Lancamento> root = criteria.from(Lancamento.class);
+
+        criteria.select(builder.construct(ResumoLancamento.class
+                , root.get("codigo")
+                , root.get("descricao")
+                , root.get("dataVencimento")
+                , root.get("dataPagamento")
+                , root.get("valor")
+                , root.get("tipo")
+                , root.get("categoria").get("nome")
+                , root.get("pessoa").get("nome")));
+
+        Predicate[] predicates = criarRestricoes(filter, builder, root);
+        criteria.where(predicates);
+
+        TypedQuery<ResumoLancamento> query = manager.createQuery(criteria);
+        adicionarRestricoesDePaginacao(query, page);
+
+        return new PageImpl<>(query.getResultList(), page, total(filter));
+    }
+
     private Predicate[] criarRestricoes(LancamentoFilter filter, CriteriaBuilder builder, Root<Lancamento> root) {
         List<Predicate> predicates = new ArrayList<>();
 
@@ -56,7 +82,7 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
         return predicates.toArray(new Predicate[0]);
     }
 
-    private void adicionarRestricoesDePaginacao(TypedQuery<Lancamento> query, Pageable page) {
+    private void adicionarRestricoesDePaginacao(TypedQuery<?> query, Pageable page) {
         int paginaAtual = page.getPageNumber();
         int totalRegistrosPorPagina = page.getPageSize();
         int primeiroRegistroDaPagina = paginaAtual * totalRegistrosPorPagina;

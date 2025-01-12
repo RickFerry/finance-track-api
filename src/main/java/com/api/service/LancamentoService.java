@@ -3,6 +3,7 @@ package com.api.service;
 import com.api.exception.PessoaInexistenteOuInativaException;
 import com.api.model.Lancamento;
 import com.api.model.Pessoa;
+import com.api.model.dto.ResumoLancamento;
 import com.api.repository.PessoaRepository;
 import com.api.repository.filter.LancamentoFilter;
 import com.api.repository.lancamento.LancamentoRepository;
@@ -28,6 +29,16 @@ public class LancamentoService {
         return getLancamento(codigo);
     }
 
+    @Transactional(readOnly = true)
+    public Page<Lancamento> pesquisar(LancamentoFilter filter, Pageable page) {
+        return lancamentoRepository.filtrar(filter, page);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ResumoLancamento> resumir(LancamentoFilter filter, Pageable page) {
+        return lancamentoRepository.resumir(filter, page);
+    }
+
     @Transactional
     public Lancamento salvar(Lancamento lancamento) {
         Pessoa pessoa = pessoaRepository.findOne(lancamento.getPessoa().getCodigo());
@@ -35,11 +46,6 @@ public class LancamentoService {
             throw new PessoaInexistenteOuInativaException("Pessoa inexistente ou inativa");
         }
         return lancamentoRepository.save(lancamento);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<Lancamento> pesquisar(LancamentoFilter filter, Pageable page) {
-        return lancamentoRepository.filtrar(filter, page);
     }
 
     @Transactional

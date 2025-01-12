@@ -1,6 +1,7 @@
 package com.api.resource;
 
 import com.api.model.Lancamento;
+import com.api.model.dto.ResumoLancamento;
 import com.api.repository.filter.LancamentoFilter;
 import com.api.service.LancamentoService;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,12 @@ public class LancamentoController {
     @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
     public ResponseEntity<Page<Lancamento>> pesquisar(LancamentoFilter filter, Pageable page) {
         return ResponseEntity.ok(lancamentoService.pesquisar(filter, page));
+    }
+
+    @GetMapping(params = "resumo")
+    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
+    public ResponseEntity<Page<ResumoLancamento>> resumir(LancamentoFilter filter, Pageable page) {
+        return ResponseEntity.ok(lancamentoService.resumir(filter, page));
     }
 
     @GetMapping("/{codigo}")
