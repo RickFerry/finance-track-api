@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -19,16 +20,19 @@ public class LancamentoController {
     private final LancamentoService lancamentoService;
 
     @GetMapping("/todos-paginado")
+    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
     public ResponseEntity<Page<Lancamento>> listar(Pageable page) {
         return ResponseEntity.ok(lancamentoService.listar(page));
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
     public ResponseEntity<Page<Lancamento>> pesquisar(LancamentoFilter filter, Pageable page) {
         return ResponseEntity.ok(lancamentoService.pesquisar(filter, page));
     }
 
     @GetMapping("/{codigo}")
+    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
     public ResponseEntity<Lancamento> buscarPorCodigo(@PathVariable Long codigo) {
         try {
             return ResponseEntity.ok(lancamentoService.buscarPorCodigo(codigo));
@@ -38,6 +42,7 @@ public class LancamentoController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
     public ResponseEntity<Lancamento> salvar(@Valid @RequestBody Lancamento lancamento, UriComponentsBuilder uriBuilder) {
         Lancamento lancamentoSalvo = lancamentoService.salvar(lancamento);
         return ResponseEntity.created(
@@ -45,6 +50,7 @@ public class LancamentoController {
     }
 
     @DeleteMapping("/{codigo}")
+    @PreAuthorize("hasAuthority('ROLE_REMOVER_LANCAMENTO') and #oauth2.hasScope('write')")
     public ResponseEntity<Void> deletar(@PathVariable Long codigo) {
         lancamentoService.deletar(codigo);
         return ResponseEntity.noContent().build();
