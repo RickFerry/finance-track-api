@@ -1,6 +1,7 @@
 package com.api.resource;
 
 import com.api.model.Pessoa;
+import com.api.repository.filter.PessoaFilter;
 import com.api.service.PessoaService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,7 +19,7 @@ import javax.validation.Valid;
 public class PessoaController {
     private final PessoaService pessoaService;
 
-    @GetMapping
+    @GetMapping("/todos-paginado")
     @PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and #oauth2.hasScope('read')")
     public ResponseEntity<Page<Pessoa>> listar(Pageable page) {
         return ResponseEntity.ok(pessoaService.listar(page));
@@ -32,6 +33,12 @@ public class PessoaController {
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping
+    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and #oauth2.hasScope('read')")
+    public ResponseEntity<Page<Pessoa>> pesquisar(PessoaFilter filter, Pageable page) {
+        return ResponseEntity.ok(pessoaService.pesquisar(filter, page));
     }
 
     @PostMapping

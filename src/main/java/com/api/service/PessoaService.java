@@ -1,7 +1,8 @@
 package com.api.service;
 
 import com.api.model.Pessoa;
-import com.api.repository.PessoaRepository;
+import com.api.repository.pessoa.PessoaRepository;
+import com.api.repository.filter.PessoaFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,11 @@ public class PessoaService {
     @Transactional(readOnly = true)
     public Pessoa buscarPorCodigo(Long codigo) {
         return getPessoa(codigo);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Pessoa> pesquisar(PessoaFilter filter, Pageable page) {
+        return pessoaRepository.filtrar(filter, page);
     }
 
     @Transactional

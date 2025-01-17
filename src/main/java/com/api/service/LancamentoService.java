@@ -4,7 +4,7 @@ import com.api.exception.PessoaInexistenteOuInativaException;
 import com.api.model.Lancamento;
 import com.api.model.Pessoa;
 import com.api.model.dto.ResumoLancamento;
-import com.api.repository.PessoaRepository;
+import com.api.repository.pessoa.PessoaRepository;
 import com.api.repository.filter.LancamentoFilter;
 import com.api.repository.lancamento.LancamentoRepository;
 import lombok.AllArgsConstructor;
