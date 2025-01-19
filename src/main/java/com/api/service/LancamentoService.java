@@ -4,10 +4,11 @@ import com.api.exception.PessoaInexistenteOuInativaException;
 import com.api.model.Lancamento;
 import com.api.model.Pessoa;
 import com.api.model.dto.ResumoLancamento;
-import com.api.repository.pessoa.PessoaRepository;
 import com.api.repository.filter.LancamentoFilter;
 import com.api.repository.lancamento.LancamentoRepository;
+import com.api.repository.pessoa.PessoaRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -51,6 +52,28 @@ public class LancamentoService {
     @Transactional
     public void deletar(Long codigo) {
         lancamentoRepository.delete(codigo);
+    }
+
+    @Transactional
+    public Lancamento atualizar(Long codigo, Lancamento lancamento) {
+        Lancamento lancamentoSalvo = getLancamento(codigo);
+        if (!lancamento.getPessoa().equals(lancamentoSalvo.getPessoa())) {
+            validarPessoa(lancamento);
+        }
+        BeanUtils.copyProperties(lancamento, lancamentoSalvo, "codigo");
+        return lancamentoRepository.save(lancamentoSalvo);
+
+    }
+
+    private void validarPessoa(Lancamento lancamento) {
+        Pessoa pessoa = null;
+        if (lancamento.getPessoa().getCodigo() != null) {
+            pessoa = pessoaRepository.findOne(lancamento.getPessoa().getCodigo());
+        }
+
+        if (pessoa == null || pessoa.isInativo()) {
+            throw new PessoaInexistenteOuInativaException("Pessoa inexistente ou inativa");
+        }
     }
 
     private Lancamento getLancamento(Long codigo) {

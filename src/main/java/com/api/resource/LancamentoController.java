@@ -56,6 +56,17 @@ public class LancamentoController {
                 uriBuilder.path("/{codigo}").buildAndExpand(lancamentoSalvo.getCodigo()).toUri()).body(lancamentoSalvo);
     }
 
+    @PutMapping("/{codigo}")
+    @PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
+    public ResponseEntity<Lancamento> atualizar(@PathVariable Long codigo, @Valid @RequestBody Lancamento lancamento) {
+        try {
+            Lancamento lancamentoSalvo = lancamentoService.atualizar(codigo, lancamento);
+            return ResponseEntity.ok(lancamentoSalvo);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("/{codigo}")
     @PreAuthorize("hasAuthority('ROLE_REMOVER_LANCAMENTO') and #oauth2.hasScope('write')")
     public ResponseEntity<Void> deletar(@PathVariable Long codigo) {
