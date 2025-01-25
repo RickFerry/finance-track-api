@@ -62,7 +62,6 @@ public class LancamentoService {
         }
         BeanUtils.copyProperties(lancamento, lancamentoSalvo, "codigo");
         return lancamentoRepository.save(lancamentoSalvo);
-
     }
 
     private void validarPessoa(Lancamento lancamento) {
