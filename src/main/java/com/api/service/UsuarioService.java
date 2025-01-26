@@ -1,9 +1,9 @@
 package com.api.service;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
+import com.api.model.Usuario;
+import com.api.model.UsuarioSistema;
+import com.api.repository.UsuarioRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,11 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.api.model.Usuario;
-import com.api.model.UsuarioSistema;
-import com.api.repository.UsuarioRepository;
-
-import lombok.RequiredArgsConstructor;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
