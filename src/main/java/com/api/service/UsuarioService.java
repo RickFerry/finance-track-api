@@ -45,7 +45,8 @@ public class UsuarioService implements UserDetailsService {
     @Transactional
     public Usuario atualizarUsuario(Long id, Usuario usuario) {
         Usuario user = getUser(id);
-        BeanUtils.copyProperties(usuario, user, "codigo");
+        user.setNome(usuario.getNome());
+        user.setPermissoes(usuario.getPermissoes());
         return usuarioRepository.save(user);
     }
 
