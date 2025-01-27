@@ -1,13 +1,24 @@
 package com.api.resource;
 
-import com.api.model.Usuario;
-import com.api.service.UsuarioService;
-import lombok.RequiredArgsConstructor;
+import javax.validation.Valid;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import com.api.model.Usuario;
+import com.api.service.UsuarioService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,14 +41,14 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> salvarUsuario(@RequestBody Usuario usuario, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<Usuario> salvarUsuario(@Valid @RequestBody Usuario usuario, UriComponentsBuilder uriBuilder) {
         Usuario user = usuarioService.salvarUsuario(usuario);
         return ResponseEntity.created(uriBuilder.path("/{id}").buildAndExpand(user.getCodigo()).toUri())
                 .body(user);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> atualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+    public ResponseEntity<Usuario> atualizarUsuario(@PathVariable Long id, @Valid @RequestBody Usuario usuario) {
         try {
             return ResponseEntity.ok(usuarioService.atualizarUsuario(id, usuario));
         } catch (Exception e) {

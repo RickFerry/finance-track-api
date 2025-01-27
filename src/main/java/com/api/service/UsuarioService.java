@@ -1,10 +1,9 @@
 package com.api.service;
 
-import com.api.model.Usuario;
-import com.api.model.UsuarioSistema;
-import com.api.repository.UsuarioRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,9 +15,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import com.api.model.Usuario;
+import com.api.model.UsuarioSistema;
+import com.api.repository.UsuarioRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
