@@ -1,9 +1,10 @@
 package com.api.service;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
+import com.api.model.Usuario;
+import com.api.model.UsuarioSistema;
+import com.api.repository.PermissaoRepository;
+import com.api.repository.UsuarioRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,17 +16,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.api.model.Usuario;
-import com.api.model.UsuarioSistema;
-import com.api.repository.UsuarioRepository;
-
-import lombok.RequiredArgsConstructor;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class UsuarioService implements UserDetailsService {
     private final UsuarioRepository usuarioRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final PermissaoRepository permissaoRepository;
 
     @Transactional(readOnly = true)
     public Page<Usuario> listarUsuarios(Pageable page) {
@@ -39,6 +39,7 @@ public class UsuarioService implements UserDetailsService {
 
     @Transactional
     public Usuario salvarUsuario(Usuario usuario) {
+        usuario.getPermissoes().forEach(permissaoRepository::save);
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         return usuarioRepository.save(usuario);
     }
