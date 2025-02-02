@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @NoArgsConstructor
 @ConfigurationProperties("api")
 public class ApiProperty {
-    private String originPermitida = "http://localhost:8000";
+    private String originPermitida = "http://localhost:4200";
     private final Seguranca seguranca = new Seguranca();
 
     @Getter

@@ -20,7 +20,6 @@ import java.util.Arrays;
 
 @Configuration
 @RequiredArgsConstructor
-@Profile("oauth-security")
 @EnableAuthorizationServer
 public class AuthorizationServerSonfig extends AuthorizationServerConfigurerAdapter {
 
