@@ -1,6 +1,6 @@
 FROM ubuntu:18.04 AS build
 
-RUN apt-get update && apt-get install -y
+RUN apt update && apt upgrade -y
 RUN apt-get install openjdk-8-jdk -y
 COPY . .
 
