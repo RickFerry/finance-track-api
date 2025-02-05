@@ -1,14 +1,15 @@
 CREATE TABLE lancamento
 (
-    codigo           BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    codigo           BIGINT AUTO_INCREMENT NOT NULL,
     descricao        VARCHAR(255) NULL,
-    data_vencimento  DATE NULL,
-    data_pagamento   DATE NULL,
+    data_vencimento  date NULL,
+    data_pagamento   date NULL,
     valor            DECIMAL NULL,
     observacao       VARCHAR(255) NULL,
     tipo             VARCHAR(255) NULL,
     codigo_categoria BIGINT NULL,
-    codigo_pessoa    BIGINT NULL
+    codigo_pessoa    BIGINT NULL,
+    CONSTRAINT pk_lancamento PRIMARY KEY (codigo)
 );
 
 ALTER TABLE lancamento
