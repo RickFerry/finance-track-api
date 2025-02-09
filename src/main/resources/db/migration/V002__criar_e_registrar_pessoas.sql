@@ -1,6 +1,6 @@
 CREATE TABLE pessoa
 (
-    codigo      BIGINT AUTO_INCREMENT PRIMARY KEY,
+    codigo      SERIAL PRIMARY KEY,
     nome        VARCHAR(50) NOT NULL,
     ativo       BOOLEAN     NOT NULL,
     logradouro  VARCHAR(255),
@@ -10,7 +10,7 @@ CREATE TABLE pessoa
     cep         VARCHAR(255),
     cidade      VARCHAR(255),
     estado      VARCHAR(255)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO pessoa (nome, ativo, logradouro, numero, complemento, bairro, cep, cidade, estado)
 VALUES ('João', true, 'Rua 1', '123', 'Apto 1', 'Centro', '12345-678', 'São Paulo', 'SP');

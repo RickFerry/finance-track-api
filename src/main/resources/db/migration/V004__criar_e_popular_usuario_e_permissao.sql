@@ -1,63 +1,29 @@
 CREATE TABLE IF NOT EXISTS usuario
 (
-    codigo
-    BIGINT
-    AUTO_INCREMENT
-    NOT
-    NULL,
-    nome
-    VARCHAR
-(
-    255
-) NOT NULL,
-    email VARCHAR
-(
-    255
-) NOT NULL,
-    senha VARCHAR
-(
-    255
-) NOT NULL,
-    CONSTRAINT pk_usuario PRIMARY KEY
-(
-    codigo
-)
-    );
+    codigo SERIAL NOT NULL,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    senha VARCHAR(255) NOT NULL,
+    CONSTRAINT pk_usuario PRIMARY KEY (codigo)
+);
 
 ALTER TABLE usuario
     ADD CONSTRAINT uc_usuario_email UNIQUE (email);
 
 CREATE TABLE IF NOT EXISTS permissao
 (
-    codigo
-    BIGINT
-    AUTO_INCREMENT
-    NOT
-    NULL,
-    descricao
-    VARCHAR
-(
-    255
-) NOT NULL,
-    CONSTRAINT pk_permissao PRIMARY KEY
-(
-    codigo
-)
-    );
+    codigo SERIAL NOT NULL,
+    descricao VARCHAR(255) NOT NULL,
+    CONSTRAINT pk_permissao PRIMARY KEY (codigo)
+);
 
 ALTER TABLE permissao
     ADD CONSTRAINT uc_permissao_descricao UNIQUE (descricao);
 
 CREATE TABLE IF NOT EXISTS usuario_permissao
 (
-    codigo_permissao
-    BIGINT
-    NOT
-    NULL,
-    codigo_usuario
-    BIGINT
-    NOT
-    NULL
+    codigo_permissao BIGINT NOT NULL,
+    codigo_usuario BIGINT NOT NULL
 );
 
 ALTER TABLE usuario_permissao

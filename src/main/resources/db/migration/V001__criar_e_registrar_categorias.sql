@@ -1,8 +1,8 @@
 CREATE TABLE categoria
 (
-    codigo BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+    codigo SERIAL PRIMARY KEY,
     nome   VARCHAR(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);
 
 INSERT INTO categoria (nome)
 VALUES ('Alimentação');
